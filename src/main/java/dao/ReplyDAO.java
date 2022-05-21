@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -14,23 +13,24 @@ import javax.sql.DataSource;
 
 import dto.ReplyDTO;
 
-public class ReplyDAO {
-	private static QnABoardDAO instance = null;
-		
-		public synchronized static QnABoardDAO getInstance() {
-			if(instance == null) {
-				instance = new QnABoardDAO();
-			}
-			return instance;
-		}
-	
-		private Connection getConnection() throws Exception{
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource)ctx.lookup("java:comp.env.jdbc/orcl");
-			return ds.getConnection();
-		}
 
-	// 댓글 작성
+
+public class ReplyDAO {
+
+	private  static ReplyDAO instance = null;
+	
+	public synchronized static ReplyDAO getInstance() {
+		if(instance == null) {
+			instance = new ReplyDAO();
+		}
+		return instance;
+	}
+
+	private Connection getConnection() throws Exception {
+		Context ctx = new InitialContext(); //이것톰캣으 ㅣ설정과 환경설정에 접글할 수 있는 객체이다.
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/orcl");		//이환경안에서 jdbc/orcl이라는걸 찾아줘~~
+		return ds.getConnection();
+	}
 	public int insert(ReplyDTO dto) throws Exception{
 		String sql = "insert into reply values(reply_seq.nextval, ?, ?, default, ?)";
 

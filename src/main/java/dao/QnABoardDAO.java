@@ -1,32 +1,36 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import dto.QnABoardDTO;
 
+
+
 public class QnABoardDAO {
-	public QnABoardDAO() {
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	private  static QnABoardDAO instance = null;
+	
+	public synchronized static QnABoardDAO getInstance() {
+		if(instance == null) {
+			instance = new QnABoardDAO();
 		}
+		return instance;
 	}
 
 	private Connection getConnection() throws Exception {
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String id = "kh";
-		String pw = "kh";
-		return DriverManager.getConnection(url, id, pw);
+		Context ctx = new InitialContext(); //이것톰캣으 ㅣ설정과 환경설정에 접글할 수 있는 객체이다.
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/orcl");		//이환경안에서 jdbc/orcl이라는걸 찾아줘~~
+		return ds.getConnection();
 	}
-
 	public int insert(QnABoardDTO dto) throws Exception {
 		String sql = "insert into qnaboard values(qna_seq.nextval, ?,?,?,sysdate,default)";
 
