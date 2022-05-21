@@ -8,24 +8,32 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+
 import dto.BoardDTO;
 
+
+
 public class BoardDAO {
-	public BoardDAO() {
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	private  static BoardDAO instance = null;
+	
+	public synchronized static BoardDAO getInstance() {
+		if(instance == null) {
+			instance = new BoardDAO();
 		}
+		return instance;
 	}
 
 	private Connection getConnection() throws Exception {
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String id = "kh";
-		String pw = "kh";
-		return DriverManager.getConnection(url, id, pw);
+		Context ctx = new InitialContext(); //이것톰캣으 ㅣ설정과 환경설정에 접글할 수 있는 객체이다.
+		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/orcl");		//이환경안에서 jdbc/orcl이라는걸 찾아줘~~
+		return ds.getConnection();
 	}
+	
 
 	public int insert(BoardDTO dto) throws Exception {
 		String sql = "insert into board values(board_seq.nextval, ?,?,?,sysdate,default)";
