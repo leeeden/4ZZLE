@@ -42,6 +42,20 @@
         .hover:hover {
             cursor: pointer;
         }
+        
+        #next {
+            height: 60px; 
+            font-size: 20px; 
+            line-height: 55px; 
+            background-color: #7A07EE; 
+            color: #ededed; 
+            border-radius:200px; 
+            padding-bottom: 1%; 
+            width: 20%; 
+            opacity: 0.5; 
+            margin-top: 3%;
+            font-weight:bold;
+        }
 
     </style>
 </head>
@@ -69,12 +83,11 @@
                 <input id="pw" type="text" placeholder="디즈니+ 비밀번호 입력" style="border: none; background-color: #ededed; width: 80%;">
             </div>
             <div style="width: 50%; margin-left: 2%; color: #ededed; padding-top: 1%;" align=left>공유 가능한 안전한 비밀번호를 사용해주세요</div>
-            <a id="disabled"><img id="next" src="./img/next.png" style="padding-bottom: 1%; width: 20%; opacity: 0.5; margin-top: 3%;"></a><br>
             <input type="hidden" name="netflix">
             <input type="hidden" name="watcha">
             <input type="hidden" name="tving">
             <input type="hidden" name="disney" value="B">
-           <button type="submit" style="color: #888888; border:none;">퍼즐 생성 후 등록하기</button>
+            <button id="next" type="submit">다음</button>
         </div>
     </div>
    </form>
@@ -120,7 +133,6 @@
 
             if (document.getElementById("pw").value != "") {
                 $("#next").css("opacity",1.0);
-                $("#disabled").attr("href","./addpuzzleleader4.jsp");
             }
         })
                 
