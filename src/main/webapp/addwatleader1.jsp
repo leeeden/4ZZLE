@@ -33,6 +33,10 @@
         /* div {
             border: 1px solid crimson;
         } */
+        
+        .hover:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -43,7 +47,7 @@
                 <a href="./addpuzzle.jsp"><img id="back" src="./img/back.png" style="width: 4%;"></a>
             </div>
             <div style="float: left; width: 50%;" align=right>
-                <img id="close" src="./img/x.png" style="width: 7%;">
+                <img class="hover" id="close" src="./img/x.png" style="width: 7%;">
             </div>
         </div>
         <div align=center style="width: 70%; padding-top: 4%;">
