@@ -182,9 +182,9 @@ nav {
 	background-color : #7A07EE;
 }
 
-div {
-border:1px solid crimson;
-}
+ div { 
+ border:1px solid crimson; 
+ } 
 
 .ott{
 width:70%;
@@ -199,23 +199,33 @@ float:left;
 height:100%;
 }
 
-.right {
+.left,.right {
 width:20%;
-}
-
-.left {
-width:20%;
-text-align:center;
+align-items:center;
 display: flex; 
 justify-content:center;
 }
 
-.left>image{
+.left img {
+width:60px;
+height:60px;
+border:1px solid #ededed;
+border-radius:12px;
+}
 
+.right img {
+width:55px;
+height:40px;
 }
 
 .center {
 width: 60%;
+height: 100%;
+}
+
+.center div{
+width:100%;
+height:50%;
 }
 
 </style>
@@ -278,29 +288,61 @@ width: 60%;
 				<div class="left">
 				<img src="/img/n.png">
 				</div>
-				<div class="center"></div>
-				<div class="right"></div>
+				<div class="center">
+				<div class="top">넷플릭스 퍼즐</div>
+				<div class="bottom">으로 이용중</div>
+				</div>
+				<div class="right">
+				<img src="/img/go.png">
+				</div>
 				</div>
 				<div class="ott">
 				<div class="left">
 				<img src="/img/w.png">
 				</div>
-				<div class="center"></div>
-				<div class="right"></div>
+				<div class="center">
+				<div class="top">왓챠 퍼즐</div>
+				<div class="bottom">으로 이용중</div>
+				</div>
+				<div class="right">
+				<img src="/img/go.png">
+				</div>
 				</div>
 				<div class="ott">
 				<div class="left">
 				<img src="/img/t.png">
 				</div>
-				<div class="center"></div>
-				<div class="right"></div>
+				<div class="center">
+				<div class="top">티빙 퍼즐</div>
+				<div class="bottom">으로 이용중</div>
+				</div>
+				<div class="right">
+				<img src="/img/go.png">
+				</div>
 				</div>
 				<div class="ott">
 				<div class="left">
 				<img src="/img/d.png">
 				</div>
-				<div class="center"></div>
-				<div class="right"></div>
+				<div class="center">
+				<div class="top">디즈니플러스 퍼즐</div>
+				<div class="bottom">으로 이용중</div>
+				</div>
+				<div class="right">
+				<img src="/img/go.png">
+				</div>
+				</div>
+				<div class="ott">
+				<div class="left">
+				<img src="/img/pzls.png">
+				</div>
+				<div class="center">
+				<div class="top">파티 추가</div>
+				<div class="bottom">새로운 퍼즐을 추가해보세요</div>
+				</div>
+				<div class="right">
+				<img src="/img/go.png">
+				</div>
 				</div>
 				</div>
 	</div>
