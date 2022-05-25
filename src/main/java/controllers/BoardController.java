@@ -37,10 +37,10 @@ public class BoardController extends HttpServlet {
 				
 				request.setAttribute("list", list);
 				request.setAttribute("navi", pageNavi);
-				request.getRequestDispatcher("./notice.jsp").forward(request, response);
+				request.getRequestDispatcher("/board/notice.jsp").forward(request, response);
 				
 			}else if(uri.equals("/write.board")) {
-				response.sendRedirect("./noticewrite.jsp");
+				response.sendRedirect("/board/noticewrite.jsp");
 			
 			}else if(uri.equals("/save.board")) {
 				String title = request.getParameter("title");
@@ -67,7 +67,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("cpage", cpage);
 				request.setAttribute("dto", dto);
 				request.setAttribute("writer", writer);
-				request.getRequestDispatcher("./noticeview.jsp").forward(request, response);
+				request.getRequestDispatcher("/board/noticeview.jsp").forward(request, response);
 			
 			}else if(uri.equals("/delete.board")) {
 				int seq = Integer.parseInt(request.getParameter("seq"));

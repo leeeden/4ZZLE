@@ -6,7 +6,8 @@ public class QnABoardDTO {
 	private int seq;
 	private String title;
 	private String contents;
-	private String writer;
+	private String writerId;
+	private String writerName;
 	private Timestamp write_date;
 	private int view_count;
 	
@@ -14,14 +15,16 @@ public class QnABoardDTO {
 		super();
 	}
 	
-	public QnABoardDTO(int seq, String title, String contents, String writer, Timestamp write_date, int view_count) {
+	public QnABoardDTO(int seq, String title, String contents, String writerId, String writerName, Timestamp write_date, int view_count) {
 		this.seq = seq;
 		this.title = title;
 		this.contents = contents;
-		this.writer = writer;
+		this.writerId = writerId;
+		this.writerName = writerName;
 		this.write_date = write_date;
 		this.view_count = view_count;
 	}
+	
 	public int getSeq() {
 		return seq;
 	}
@@ -40,12 +43,23 @@ public class QnABoardDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getWriter() {
-		return writer;
+	
+	public String getWriterId() {
+		return writerId;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+
 	public Timestamp getWrite_date() {
 		return write_date;
 	}

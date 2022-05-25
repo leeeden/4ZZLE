@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="chrome">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>가이드</title>
+<title>마이페이지</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -35,9 +35,9 @@ button {
 }
 
 #con1 {
-	height: 1635px;
+	height:1000px;
 	background-color: #121212;
-	padding-top: 200px;
+	padding-top: 260px;
 }
 
 #main1 {
@@ -181,13 +181,47 @@ nav {
 	background-color : #7A07EE;
 }
 
+input[type$=xt], input[type$=word]  {
+            border: 0.5px solid #aaa;
+            border-radius: 0;
+            width: 100%;
+            height: 80px;
+            color: #ededed;
+            padding: 0.6em 1.4em 0.5em 0.8em;
+            background-color:#121212;
+        }
+
+.btn {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 700;
+	height: 45px;
+	line-height: 30px;
+	font-weight: bold;
+	background-color: #7A07EE;
+	color: #FFFFFF;
+	border-radius: 12px;
+	width: 130px;
+	margin-top: 9%;
+	border: none;
+}
+
+.left{
+margin-top:20px;
+margin-bottom:20px;
+}
+
+input:focus {
+  border: 2px solid #7A07EE;
+}
+
 </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="#" id=logo><img src="/img/logo2.png"></a>
+				<a class="navbar-brand" href="/index.jsp" id=logo><img src="/img/logo2.png"></a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
 					aria-controls="navbarCollapse" aria-expanded="false"
@@ -196,9 +230,9 @@ nav {
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ol class="navbar-nav centered">
-						<li class="nav-item"><a class="nav-link"
+						<li class="nav-item"><a class="nav-link active"
 							aria-current="page" href="/index.jsp">홈</a></li>
-						<li class="nav-item"><a class="nav-link active" href="/guide.jsp">가이드</a></li>
+						<li class="nav-item"><a class="nav-link" href="/guide.jsp">가이드</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">MY퍼즐</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">포즐피디아</a></li>
 
@@ -231,24 +265,37 @@ nav {
 				</div>
 			</div>
 		</nav>
+<form action="/update.member" method="post">
 <div id="con1">
 	<div class="container">
 				<div id="main1">
-					포즐 가이드
+					마이페이지
 				</div>
-				<div id="main2">
-					포즐은 '계정 공유 요금제'로 인해 생기는 고객들의 불편함을 해소하고,<br>기존에 보호받을 수 없었던 고객들의 돈을 안전하게 보호합니다!
-				</div>	
-				<div id="main3" align=center>			
-				<img id="guide" src="/img/frame68.png">
-				</div>
-				<div align=center>
-				<div id="main4" align=center>더 궁금한 점이 있으신가요?</div>
-				<div id="main5" align=center>언제든지 포즐 고객센터를 통해 문의하세요</div>
-				<a href="/list.qnaboard?cpage=1"><button class="qna">1:1 문의하기</button></a>
-				</div>
+				<div align=center style="color: #ededed; width: 100%; margin-bottom: 5%;">
+            <div class="left" style="width: 40%; font-size: 20px; margin-top:5%;" align=left>
+                아이디
+            </div>
+            <div class="right" style="width: 40%;"><input type="text" value="${dto.id}" disabled></div>
+            <div class="left" style="width: 40%; font-size: 20px;" align=left>
+                비밀번호
+            </div>
+            <div class="right" style="width: 40%;">
+            <input type="password" value="" disabled class="editable" id="pw" name="pw">
+            <input type="hidden" value="${dto.pw}" id="originpw" name="originpw">
+            </div>
+            <div class="left" style="width: 40%; font-size: 20px;" align=left>
+                닉네임
+            </div>
+            <div class="right" style="width: 40%;"><input type="text" name="nickname" id="nickname" value="${dto.nickname}" disabled class="editable" id="nickname" name="nickname"></div>
+                <div id="btns" class="left" style="width: 40%; font-size: 20px;" align=center>
+                <button class="btn" id="modify" type="button" >수정</button>
+                <button class="btn" id="memberOut" type="button" style="margin-left: 3%;">회원탈퇴</button>
+                </div>
+            </div>
+    </div>
 	</div>
 </div>
+</form>
 <div class="col-12 d-none d-md-block">
 <div id="con5" align=center>
 	<div class="container">
@@ -287,4 +334,83 @@ nav {
 </div>
 </div>
 </body>
+<script>
+    $("#modify").on("click",function(){
+        $(".editable").removeAttr("disabled");
+        $("#modify").css("display","none");
+        $("#memberOut").css("display","none");
+        $("#nickname").focus();
+        
+        let ok = $("<button>");
+        ok.text("수정");
+        ok.css("color", "#ededed");
+        ok.attr("class","btn");
+        ok.attr("id","submit")
+        
+        let cancel = $("<button>");
+        cancel.text("취소");
+        cancel.attr("class","btn");
+        cancel.attr("type","button");
+        cancel.css("margin-left","4%");
+        cancel.on("click",function(){
+            location.reload();
+        })
+        
+        $("#btns").append(ok);
+        $("#btns").append(cancel);
+        
+        $("#submit").on("click",function(){
+            // 패스워드 검사
+                  
+            let pw = $("#pw").val();
+            
+            let pwRegex = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?=[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,}$/;
+            let pwResult = pwRegex.test(pw);
+            
+           if(pw != ""){
+            	if (!pwResult) {
+                    alert("PW를 다시 입력해주세요.(영문,숫자,특수문자 중 최소 2가지 포함 10자 이상)");
+                    $("#pw").val("");
+                    $("#pw").focus();
+                    return false;
+                }
+           }
+                   
+//             let pwRegex = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?=[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,}$/;
+//             let pwResult = pwRegex.test(pw);
+//             if (!pwResult) {
+//                 alert("PW를 다시 입력해주세요.(영문,숫자,특수문자 중 최소 2가지 포함 10자 이상)");
+//                 $("#pw").val("");
+//                 $("pw_check").val("");
+//                 $("#pw").focus();
+//                 return false;
+//             }
+
+            // 닉네임 검사
+            let nickname = $("#nickname").val();
+            let nicknameRegex = /[\w가-힣]{2,8}/;
+            let nicknameResult = nicknameRegex.test(nickname);
+            if (!nicknameResult) {
+                alert("닉네임을 다시 입력해주세요.(특수문자제외, 2~8자)");
+                $("#nickname").val("");
+                $("#nickname").focus();
+                return false;
+            }
+        })
+    })
+    
+    $("#memberOut").on("click", function() {
+                let result = confirm("정말 탈퇴하시겠습니까?");
+                if(result){
+                    location.href="/memberOut.member";
+                }
+            });
+    $("#back").on("click",function(){
+        location.href="/index.jsp";
+    })
+    
+    $("#logout").on("click",function(){
+	location.href = "/logout.member";
+	});
+</script>
 </html>

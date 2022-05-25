@@ -29,33 +29,32 @@ public class ReplyController extends HttpServlet {
 		
 		try {
 			if(uri.equals("/insert.reply")) {	// 답변 저장
-				String writer = (String)request.getSession().getAttribute("loginID");
-				int seq = Integer.parseInt(request.getParameter("seq"));
-				
+				String writer = (String)request.getSession().getAttribute("loginID");				
 				String contents = request.getParameter("contents");
 				
-				int parent_seq = (int)request.getSession().getAttribute("parent_seq");
+				int parent_seq = Integer.parseInt(request.getParameter("pseq"));
 				
 				int result = dao.insert(new ReplyDTO(0,writer,contents,null,parent_seq));
 				
-				response.sendRedirect("/detail.qnaboard?seq="+seq);
+				response.sendRedirect("/detail.qnaboard?seq="+parent_seq);
 			
 			}else if(uri.equals("/delete.reply")){	// 답변 삭제
-				int seq = Integer.parseInt(request.getParameter("seq"));
+				int seq = Integer.parseInt(request.getParameter("rseq"));
 				int result = dao.deleteBySeq(seq);
+				
 				PrintWriter pw = response.getWriter();
 				pw.append(g.toJson(result));
 				
-				System.out.println(result);
-//				int parent_seq = (int)request.getSession().getAttribute("parent_seq");
-//				response.sendRedirect("/detail.board?seq=" + parent_seq);
+				int parent_seq = Integer.parseInt(request.getParameter("pseq"));
+				response.sendRedirect("/detail.board?seq=" + parent_seq);
 			
-			}else if(uri.equals("update.reply")) {	// 답변 수정
-				int seq = Integer.parseInt(request.getParameter("seq"));
+			}else if(uri.equals("/update.reply")) {	// 답변 수정
+				int seq = Integer.parseInt(request.getParameter("rseq"));
 				String contents = request.getParameter("contents");
 				dao.updateBySeq(seq, contents);
 				
-				int parent_seq = (int)request.getSession().getAttribute("parent_seq");
+				int parent_seq = Integer.parseInt(request.getParameter("pseq"));
+				
 				response.sendRedirect("/detail.qnaboard?seq=" + parent_seq);
 			}
 		} catch (Exception e) {

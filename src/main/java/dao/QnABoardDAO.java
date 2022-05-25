@@ -31,13 +31,15 @@ public class QnABoardDAO {
 		DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/orcl");		//이환경안에서 jdbc/orcl이라는걸 찾아줘~~
 		return ds.getConnection();
 	}
+	
 	public int insert(QnABoardDTO dto) throws Exception {
-		String sql = "insert into qnaboard values(qna_seq.nextval, ?,?,?,sysdate,default)";
+		String sql = "insert into qnaboard values(qna_seq.nextval,?,?,?,?,sysdate,default)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, dto.getTitle());
 			pstat.setString(2, dto.getContents());
-			pstat.setString(3, dto.getWriter());
+			pstat.setString(3, dto.getWriterId());
+			pstat.setString(4, dto.getWriterName());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -57,7 +59,8 @@ public class QnABoardDAO {
 				dto.setSeq(rs.getInt("seq"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContents(rs.getString("contents"));
-				dto.setWriter(rs.getString("writer"));
+				dto.setWriterId(rs.getString("writerId"));
+				dto.setWriterName(rs.getString("writerName"));
 				dto.setWrite_date(rs.getTimestamp("write_date"));
 				dto.setView_count(rs.getInt("view_count"));
 
@@ -77,7 +80,8 @@ public class QnABoardDAO {
 				dto.setSeq(rs.getInt("seq"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContents(rs.getString("contents"));
-				dto.setWriter(rs.getString("writer"));
+				dto.setWriterId(rs.getString("writerId"));
+				dto.setWriterName(rs.getString("writerName"));
 				dto.setWrite_date(rs.getTimestamp("write_date"));
 				dto.setView_count(rs.getInt("view_count"));
 				return dto;
@@ -159,10 +163,6 @@ public class QnABoardDAO {
 			endNavi = pageTotalCount;
 		}
 
-		System.out.println("현재 페이지 : " + currentPage);
-		System.out.println("네비 시작 값 : " + startNavi);
-		System.out.println("네비 끝 값 : " + endNavi);
-
 		boolean needNext = true;
 		boolean needPrev = true;
 
@@ -217,11 +217,12 @@ public class QnABoardDAO {
 						int seq = rs.getInt("seq");
 						String title = rs.getString("title");
 						String contents = rs.getString("contents");
-						String writer = rs.getString("writer");
+						String writerId = rs.getString("writerId");
+						String writerName = rs.getString("writerName");
 						Timestamp write_date = rs.getTimestamp("write_date");
 						int view_count = rs.getInt("view_count");
 
-						QnABoardDTO dto = new QnABoardDTO(seq, title, contents, writer, write_date, view_count);
+						QnABoardDTO dto = new QnABoardDTO(seq, title, contents, writerId, writerName, write_date, view_count);
 						list.add(dto);
 					}
 					return list;

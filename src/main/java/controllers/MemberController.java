@@ -27,7 +27,7 @@ public class MemberController extends HttpServlet {
 		
 		try {
 			if(uri.equals("/join.member")) {
-				response.sendRedirect("./join.jsp");
+				response.sendRedirect("/member/join.jsp");
 			
 		}else if(uri.equals("/duplCheck.member")) {
 			String id = request.getParameter("id");
@@ -45,14 +45,13 @@ public class MemberController extends HttpServlet {
 
 			dao.insert(new MemberDTO(id, pw, nickname, null, null, null, null, null));
 
-			response.sendRedirect("./login.jsp");
+			response.sendRedirect("/member/login.jsp");
 
 		}else if(uri.equals("/login.member")) {	// 로그인
 			String id = request.getParameter("id");
 			String pw = EncryptUtils.SHA512(request.getParameter("pw"));
 
 			boolean result = dao.isLoginOk(id, pw);
-
 			if(result) {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginID", id);	
@@ -60,25 +59,25 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("nickname", nickname);
 				response.sendRedirect("./index.jsp");
 			}else{
-				response.sendRedirect("./loginFail.jsp");
+				response.sendRedirect("/member/loginFail.jsp");
 			}
 		}else if(uri.equals("/logout.member")){	// 로그아웃
 			request.getSession().invalidate();
-			response.sendRedirect("./index.jsp");
+			response.sendRedirect("/index.jsp");
 			
 		}else if(uri.equals("/myPage.member")) { // 마이페이지
 			String id = (String)request.getSession().getAttribute("loginID");
 			MemberDTO dto =  dao.selectById(id);
 			
 			request.setAttribute("dto", dto);
-			request.getRequestDispatcher("./mypage.jsp").forward(request, response);
+			request.getRequestDispatcher("/member/mypage.jsp").forward(request, response);
 			
 		}else if(uri.equals("/memberOut.member")) {	// 회원탈퇴
 			String id = (String)request.getSession().getAttribute("loginID");
 			int result = dao.deleteById(id);
 			
 			request.getSession().invalidate();
-			response.sendRedirect("./index.jsp");
+			response.sendRedirect("/index.jsp");
 			
 		}else if(uri.equals("/update.member")){	// 수정
 			String id = (String)request.getSession().getAttribute("loginID");
@@ -95,7 +94,7 @@ public class MemberController extends HttpServlet {
 			
 			response.sendRedirect("/myPage.member");
 		}else if(uri.equals("/pwFind.member")) { //비밀번호찾기 페이지
-			response.sendRedirect("./pwFind.jsp");
+			response.sendRedirect("/member/pwFind.jsp");
 		}else if(uri.equals("/updatePuzzle.member")) { //퍼즐 업데이트
 			String id = (String)request.getSession().getAttribute("loginID");
 			String netflix = request.getParameter("netflix");
@@ -123,7 +122,7 @@ public class MemberController extends HttpServlet {
 		}
 			}catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("./error.jsp");
+			response.sendRedirect("/error.jsp");
 			return;
 		}
 	}
